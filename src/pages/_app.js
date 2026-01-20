@@ -1,5 +1,6 @@
 // src/pages/_app.js
 import "../styles/globals.css";
+import Head from "next/head";
 import Link from "next/link";
 import DividerTop from "../components/dividerTop";
 import DividerBot from "../components/dividerBot";
@@ -9,6 +10,10 @@ import { AppDataProvider } from "../context/AppDataContext";
 export default function MyApp({ Component, pageProps }) {
   return (
     <AppDataProvider>
+      <Head>
+        <link rel="icon" href="/images/key.webp" type="image/webp" />
+        <title>eclipse</title>
+      </Head>
       <div className="flex flex-col md:flex-row h-screen bg-gray-100 beaufort">
         <div className="w-full md:w-64 bg-black text-white flex flex-col justify-between md:h-screen md:sticky md:top-0">
           <div>
@@ -27,7 +32,7 @@ export default function MyApp({ Component, pageProps }) {
                 <Nav href="/mangas" label="Manga" />
                 <Nav href="/shows" label="Shows" />
                 <Nav href="/movies" label="Movies" />
-                <Nav href="/admin" label="Admin"/>
+                <Nav href="/admin" label="Admin" />
               </div>
             </nav>
           </div>
@@ -46,7 +51,6 @@ export default function MyApp({ Component, pageProps }) {
   );
 }
 
-// Sidebar nav link
 function Nav({ href, label }) {
   return (
     <Link
