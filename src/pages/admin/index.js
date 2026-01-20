@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const todayDate = () => new Date().toISOString().split("T")[0];
 
 export default function AdminPage() {
-   
+
     const [blogs, setBlogs] = useState([]);
     const [newBlog, setNewBlog] = useState({ title: "", image: "", content: "" });
     const [editingBlogId, setEditingBlogId] = useState(null);
@@ -66,7 +66,7 @@ export default function AdminPage() {
         }
         fetchBlogs();
         fetchMangas();
-    }, []); 
+    }, []);
 
     const fetchBlogs = async () => {
         const res = await fetch("/api/blogs");
@@ -233,84 +233,84 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto px-5 text-black">
             <div className="flex flex-col gap-3">
                 <h1 className="text-[25px] font-bold text-center">EDITING MODE</h1>
-                {/* 
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Blogs</h2>
 
-                <div className="grid gap-3 max-w-xl mb-6">
-                    <input
-                        placeholder="Title"
-                        value={newBlog.title}
-                        onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
-                        className="border px-3 py-2"
-                    />
-                    <input
-                        placeholder="Image URL"
-                        value={newBlog.image}
-                        onChange={(e) => setNewBlog({ ...newBlog, image: e.target.value })}
-                        className="border px-3 py-2"
-                    />
-                    <textarea
-                        placeholder="Content"
-                        value={newBlog.content}
-                        onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
-                        className="border px-3 py-2"
-                    />
-                    <button onClick={createBlog} className="bg-black text-white px-4 py-2">
-                        Add Blog
-                    </button>
-                </div>
+                <section className="flex flex-col items-center">
+                    <h2 className="text-2xl font-bold mb-4">Blogs</h2>
 
-                <div className="flex flex-col gap-3">
-                    {blogs.map((blog) => (
-                        <div key={blog._id} className="border p-4">
-                            {editingBlogId === blog._id ? (
-                                <div className="grid gap-2">
-                                    <input
-                                        value={editBlog.title}
-                                        onChange={(e) => setEditBlog({ ...editBlog, title: e.target.value })}
-                                        className="border px-3 py-2"
-                                    />
-                                    <input
-                                        value={editBlog.image}
-                                        onChange={(e) => setEditBlog({ ...editBlog, image: e.target.value })}
-                                        className="border px-3 py-2"
-                                    />
-                                    <textarea
-                                        value={editBlog.content}
-                                        onChange={(e) => setEditBlog({ ...editBlog, content: e.target.value })}
-                                        className="border px-3 py-2"
-                                    />
-                                    <div className="flex gap-3">
-                                        <button onClick={saveBlogEdit} className="bg-black text-white px-4 py-2">
-                                            Save
-                                        </button>
-                                        <button onClick={() => setEditingBlogId(null)} className="underline">
-                                            Cancel
-                                        </button>
+                    <div className="grid gap-3 max-w-xl mb-6">
+                        <input
+                            placeholder="Title"
+                            value={newBlog.title}
+                            onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+                            className="border px-3 py-2"
+                        />
+                        <input
+                            placeholder="Image URL"
+                            value={newBlog.image}
+                            onChange={(e) => setNewBlog({ ...newBlog, image: e.target.value })}
+                            className="border px-3 py-2"
+                        />
+                        <textarea
+                            placeholder="Content"
+                            value={newBlog.content}
+                            onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
+                            className="border px-3 py-2"
+                        />
+                        <button onClick={createBlog} className="bg-black text-white px-4 py-2">
+                            Add Blog
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        {blogs.map((blog) => (
+                            <div key={blog._id} className="border p-4">
+                                {editingBlogId === blog._id ? (
+                                    <div className="grid gap-2">
+                                        <input
+                                            value={editBlog.title}
+                                            onChange={(e) => setEditBlog({ ...editBlog, title: e.target.value })}
+                                            className="border px-3 py-2"
+                                        />
+                                        <input
+                                            value={editBlog.image}
+                                            onChange={(e) => setEditBlog({ ...editBlog, image: e.target.value })}
+                                            className="border px-3 py-2"
+                                        />
+                                        <textarea
+                                            value={editBlog.content}
+                                            onChange={(e) => setEditBlog({ ...editBlog, content: e.target.value })}
+                                            className="border px-3 py-2"
+                                        />
+                                        <div className="flex gap-3">
+                                            <button onClick={saveBlogEdit} className="bg-black text-white px-4 py-2">
+                                                Save
+                                            </button>
+                                            <button onClick={() => setEditingBlogId(null)} className="underline">
+                                                Cancel
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <strong>{blog.title}</strong>
-                                        <p className="text-sm text-gray-500">{blog.date}</p>
+                                ) : (
+                                    <div className="flex justify-between items-center">
+                                        <div>
+                                            <strong>{blog.title}</strong>
+                                            <p className="text-sm text-gray-500">{blog.date}</p>
+                                        </div>
+                                        <div className="flex gap-3">
+                                            <button onClick={() => startEditBlog(blog)} className="underline text-sm">
+                                                Edit
+                                            </button>
+                                            <button onClick={() => deleteBlog(blog._id)} className="text-red-500">
+                                                Delete
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="flex gap-3">
-                                        <button onClick={() => startEditBlog(blog)} className="underline text-sm">
-                                            Edit
-                                        </button>
-                                        <button onClick={() => deleteBlog(blog._id)} className="text-red-500">
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </section>
-*/}
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 <section className="flex flex-col items-center">
                     <h2 className="text-2xl font-bold mb-4">ADD A MANGA!</h2>
                     {/* ADDING MANGA FORM */}

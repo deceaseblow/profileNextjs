@@ -32,8 +32,11 @@ function Blogs() {
       >
         Blog
       </h2>
+      <p className="my-6">
+        heyyyyyyyyyyy! huehuehuehue
+      </p>
 
-      <div className="flex gap-3 flex-wrap items-center justify-center md:justify-start">
+     <div className="flex flex-col gap-3 flex-wrap md:justify-start">
         {data.blogs.map((blog) => (
           <BlogCard
             key={blog._id}       
