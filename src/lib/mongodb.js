@@ -1,7 +1,10 @@
+// lib/mongodb.js
 import { MongoClient } from "mongodb";
 
-const uri =
-  "mongodb+srv://sabinaxd:dPkG7ArsLyw5GTAS@profileapp.39krle7.mongodb.net/profileApp";
+const uri = process.env.MONGODB_URI; // Mongo URI from .env.local
+if (!uri) {
+  throw new Error("Please define MONGODB_URI in your .env.local");
+}
 
 let client;
 let clientPromise;
