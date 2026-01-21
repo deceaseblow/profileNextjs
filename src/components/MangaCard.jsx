@@ -2,7 +2,7 @@ export default function MangaCard({ manga }) {
   const fallbackImage =
     "https://dennymfg.com/cdn/shop/products/ckgrayHigh_grande.jpg?v=1619109728";
 
-  if (!manga.link) return null; // nothing to link to
+  if (!manga.link) return null; 
 
   return (
     <a

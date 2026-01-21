@@ -32,7 +32,6 @@ export default function MyApp({ Component, pageProps }) {
                 <Nav href="/mangas" label="Manga" />
                 <Nav href="/shows" label="Shows" />
                 <Nav href="/movies" label="Movies" />
-                <Nav href="/admin" label="Admin" />
               </div>
             </nav>
           </div>
@@ -42,7 +41,6 @@ export default function MyApp({ Component, pageProps }) {
           </div>
         </div>
 
-        {/* Page content */}
         <div className="flex-1 overflow-y-auto pt-6">
           <Component {...pageProps} />
         </div>

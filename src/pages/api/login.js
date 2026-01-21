@@ -7,16 +7,14 @@ export default function handler(req, res) {
 
   const { password } = req.body;
 
-  // check password against env
   if (password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ message: "Wrong password" });
   }
 
-  // generate JWT token
   const token = jwt.sign(
     { role: "admin" },
     process.env.JWT_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: "2m" }
   );
 
   res.status(200).json({ token });

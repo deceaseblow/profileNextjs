@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const todayDate = () => new Date().toISOString().split("T")[0];
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 export default function AdminPage() {
 
@@ -211,6 +212,12 @@ export default function AdminPage() {
         m.title.toLowerCase().includes(mangaSearch.toLowerCase())
     );
 
+    const logout = () => {
+        localStorage.removeItem("adminToken");
+        setIsAuth(false);
+    };
+
+
     if (!isAuth) {
         return (
             <div className="min-h-screen flex flex-col justify-center items-center gap-4">
@@ -231,39 +238,110 @@ export default function AdminPage() {
 
     return (
         <div className="max-w-7xl mx-auto px-5 text-black">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 items-center">
+                {/* ADDING BLOGS AND MANGAS*/}
                 <h1 className="text-[25px] font-bold text-center">EDITING MODE</h1>
+                <section className="flex flex-col md:flex-row justify-center gap-4">
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-2xl font-bold mb-4">Add a Blog!</h2>
+                        {/* ADDING BLOG FORM */}
+                        <div className="grid gap-3 max-w-xl mb-6">
+                            <input
+                                placeholder="Title"
+                                value={newBlog.title}
+                                onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Image URL"
+                                value={newBlog.image}
+                                onChange={(e) => setNewBlog({ ...newBlog, image: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <textarea
+                                placeholder="Content"
+                                value={newBlog.content}
+                                onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <button onClick={createBlog} className="bg-black text-white px-4 py-2">
+                                Add Blog
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-2xl font-bold mb-4">ADD A MANGA!</h2>
+                        {/* ADDING MANGA FORM */}
+                        <div className="flex flex-col gap-3 max-w-xl mb-6">
+                            <input
+                                placeholder="Title"
+                                value={newManga.title}
+                                onChange={(e) => setNewManga({ ...newManga, title: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Author"
+                                value={newManga.author}
+                                onChange={(e) => setNewManga({ ...newManga, author: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Year"
+                                value={newManga.year}
+                                onChange={(e) => setNewManga({ ...newManga, year: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Genres (commas)"
+                                value={newManga.genres}
+                                onChange={(e) => setNewManga({ ...newManga, genres: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Status"
+                                value={newManga.status}
+                                onChange={(e) => setNewManga({ ...newManga, status: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="Image URL"
+                                value={newManga.image}
+                                onChange={(e) => setNewManga({ ...newManga, image: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <input
+                                placeholder="External Link"
+                                value={newManga.link}
+                                onChange={(e) => setNewManga({ ...newManga, link: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <textarea
+                                placeholder="Comment"
+                                value={newManga.comment}
+                                onChange={(e) => setNewManga({ ...newManga, comment: e.target.value })}
+                                className="border px-3 py-2"
+                            />
+                            <button onClick={createManga} className="bg-black text-white px-4 py-2">
+                                Add Manga
+                            </button>
+                        </div>
+                    </div>
+                    
+
+                </section>
+                <button
+                        onClick={logout}
+                        className="bg-black text-white px-4 py-2 rounded w-fit"
+                    >
+                        Exit Admin
+                    </button>
 
                 <section className="flex flex-col items-center">
-                    <h2 className="text-2xl font-bold mb-4">Blogs</h2>
-
-                    <div className="grid gap-3 max-w-xl mb-6">
-                        <input
-                            placeholder="Title"
-                            value={newBlog.title}
-                            onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Image URL"
-                            value={newBlog.image}
-                            onChange={(e) => setNewBlog({ ...newBlog, image: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <textarea
-                            placeholder="Content"
-                            value={newBlog.content}
-                            onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <button onClick={createBlog} className="bg-black text-white px-4 py-2">
-                            Add Blog
-                        </button>
-                    </div>
-
+                    <h2 className="text-2xl font-bold mb-4">All blogs</h2>
+                    {/*MAPPING ALL BLOGS */}
                     <div className="flex flex-col gap-3">
                         {blogs.map((blog) => (
-                            <div key={blog._id} className="border p-4">
+                            <div key={blog._id} className="border py-2 px-4">
                                 {editingBlogId === blog._id ? (
                                     <div className="grid gap-2">
                                         <input
@@ -291,17 +369,17 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex justify-between gap-3 items-center">
                                         <div>
                                             <strong>{blog.title}</strong>
                                             <p className="text-sm text-gray-500">{blog.date}</p>
                                         </div>
                                         <div className="flex gap-3">
-                                            <button onClick={() => startEditBlog(blog)} className="underline text-sm">
-                                                Edit
+                                            <button onClick={() => startEditBlog(blog)} className="underline text-sm p-2">
+                                                <PencilIcon className="w-5 h-5" />
                                             </button>
-                                            <button onClick={() => deleteBlog(blog._id)} className="text-red-500">
-                                                Delete
+                                            <button onClick={() => deleteBlog(blog._id)} className="text-red-500 p-2">
+                                                <TrashIcon className="w-5 h-5" />
                                             </button>
                                         </div>
                                     </div>
@@ -309,64 +387,9 @@ export default function AdminPage() {
                             </div>
                         ))}
                     </div>
-                </section>
 
-                <section className="flex flex-col items-center">
-                    <h2 className="text-2xl font-bold mb-4">ADD A MANGA!</h2>
-                    {/* ADDING MANGA FORM */}
-                    <div className="flex flex-col gap-3 max-w-xl mb-6">
-                        <input
-                            placeholder="Title"
-                            value={newManga.title}
-                            onChange={(e) => setNewManga({ ...newManga, title: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Author"
-                            value={newManga.author}
-                            onChange={(e) => setNewManga({ ...newManga, author: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Year"
-                            value={newManga.year}
-                            onChange={(e) => setNewManga({ ...newManga, year: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Genres (commas)"
-                            value={newManga.genres}
-                            onChange={(e) => setNewManga({ ...newManga, genres: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Status"
-                            value={newManga.status}
-                            onChange={(e) => setNewManga({ ...newManga, status: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="Image URL"
-                            value={newManga.image}
-                            onChange={(e) => setNewManga({ ...newManga, image: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <input
-                            placeholder="External Link"
-                            value={newManga.link}
-                            onChange={(e) => setNewManga({ ...newManga, link: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <textarea
-                            placeholder="Comment"
-                            value={newManga.comment}
-                            onChange={(e) => setNewManga({ ...newManga, comment: e.target.value })}
-                            className="border px-3 py-2"
-                        />
-                        <button onClick={createManga} className="bg-black text-white px-4 py-2">
-                            Add Manga
-                        </button>
-                    </div>
+                    <h2 className="text-2xl font-bold mt-4">All mangas</h2>
+                    {/*SEARCFH BAR FOR MANGAS */}
                     <div className="mb-4 text-center ">
                         <input
                             type="text"
@@ -378,10 +401,10 @@ export default function AdminPage() {
                                 placeholder-gray-500 placeholder:italic transition-all duration-200"
                         />
                     </div>
+                    {/*MAPPING ALL MANGAS */}
                     <div className="flex flex-wrap justify-center gap-3 ">
                         {filteredMangas.map((manga) => (
-                            <div key={manga._id} className="w-[300px] flex flex-col items-center border border-2 rounded-2xl px-4 py-3">
-                                {/*EDITING MANGA CARD STATE */}
+                            <div key={manga._id} className="w-[300px] flex flex-col items-center border border-2  px-4 py-3">
                                 {editingMangaId === manga._id ? (
                                     <div className="flex flex-col gap-2">
                                         <input
